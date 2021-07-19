@@ -36,19 +36,52 @@ export default {
     const isShow = ref(true)
     const isShare = ref(false)
     const btnArr = reactive([
-      { id: 1, val: '5', isLike: false, url: require('../assets/img/xx.png') },
+      { id: 1, val: '≤5', isLike: false, url: require('../assets/img/xx.png') },
       { id: 2, val: '6', isLike: false, url: require('../assets/img/xx.png') },
       { id: 3, val: '7', isLike: false, url: require('../assets/img/xx.png') },
       { id: 4, val: '8', isLike: false, url: require('../assets/img/xx.png') },
       { id: 5, val: '9', isLike: false, url: require('../assets/img/xx.png') }
     ])
-    function tap (i) {
-      console.log(i)
-      btnArr[i].isLike = !btnArr[i].isLike
-      if (btnArr[i].isLike) {
-        btnArr[i].url = require('../assets/img/xx_ed.png')
+    const startNum = ref(0)
+    function tap (index) {
+      const total = btnArr.length
+      const idx = index + 1
+      // 判断
+      if (startNum.value === 0) {
+        startNum.value = idx
+        for (let i = 0; i < idx; i++) {
+          btnArr[i].url = require('../assets/img/xx_ed.png')
+          btnArr[i].isLike = true
+        }
       } else {
-        btnArr[i].url = require('../assets/img/xx.png')
+        // 如果再次点击当前选中的星级-仅取消掉当前星级，保留之前的
+        if (idx === startNum.value) {
+          for (let i = index; i < total; i++) {
+            btnArr[i].url = require('../assets/img/xx.png')
+            btnArr[i].isLike = false
+          }
+        }
+        // 如果小于当前最高星级，则直接保留当前星级
+        if (idx < startNum.value) {
+          for (let i = idx; i < startNum.value; i++) {
+            btnArr[i].url = require('../assets/img/xx.png')
+            btnArr[i].isLike = false
+          }
+        }
+        // 如果大于当前星级，则直接选到该星级
+        if (idx > startNum.value) {
+          for (let i = 0; i < idx; i++) {
+            btnArr[i].url = require('../assets/img/xx_ed.png')
+            btnArr[i].isLike = true
+          }
+        }
+        const count = ref(0)
+        for (let i = 0; i < total; i++) {
+          if (btnArr[i].isLike) {
+            count.value++
+          }
+        }
+        startNum.value = count.value
       }
     }
     function showShare () {
@@ -60,6 +93,7 @@ export default {
     return {
       isShow,
       btnArr,
+      startNum,
       isShare,
       showShare,
       close,
@@ -69,9 +103,23 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.index_img{
-  width: 100%;
-  height: 100%;
+.home{
+  min-height: 100vh;
+  .index_img{
+    width: 100vw;
+    height: 100vh;
+  }
+}
+@keyframes bigger{
+  0% {
+    transform:scale(1)
+  }
+  50% {
+    transform:scale(1.2)
+  }
+  100% {
+    transform:scale(1)
+  }
 }
 .share_model_wrap{
   width: 100%;
@@ -175,8 +223,9 @@ export default {
           top: 0;
           left: 0;
           right: 0;
-          color: #FFFFFF;
+          color: #3C485C;
           font-size: 24px;
+          font-weight: 600;
           margin: 0 auto;
           line-height: 96px;
           text-align: center;
@@ -190,13 +239,15 @@ export default {
         .xx_img{
           width: 94px;
           height: 94px;
+          animation: bigger 1s;
         }
         span{
           position: absolute;
           top: 0;
           left: 0;
           right: 0;
-          color: #000;
+          color: #3C485C;
+          font-weight: 600;
           font-size: 24px;
           margin: 0 auto;
           line-height: 96px;
@@ -214,7 +265,7 @@ export default {
       color: #FFFFFF;
       line-height: 96px;
       text-align: center;
-      margin: 0 auto 30px;
+      margin: 0 auto 50px;
     }
   }
 }
