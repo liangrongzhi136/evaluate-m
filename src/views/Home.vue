@@ -14,7 +14,7 @@
         <div class="evaluate_box">
           <template v-for="(item, idx) in btnArr" :key="idx">
             <div :class="!item.isLike?'evaluate_btn':'evaluate_btn_ed'" @click="tap(idx)">
-              <img :src="item.url" class="xx_img">
+              <img :src="!item.isLike?require('../assets/img/xx.png'):require('../assets/img/xx_ed.png')" class="xx_img">
               <span>{{item.val}}</span>
             </div>
           </template>
@@ -36,11 +36,11 @@ export default {
     const isShow = ref(true)
     const isShare = ref(false)
     const btnArr = reactive([
-      { id: 1, val: '≤5', isLike: false, url: require('../assets/img/xx.png') },
-      { id: 2, val: '6', isLike: false, url: require('../assets/img/xx.png') },
-      { id: 3, val: '7', isLike: false, url: require('../assets/img/xx.png') },
-      { id: 4, val: '8', isLike: false, url: require('../assets/img/xx.png') },
-      { id: 5, val: '9', isLike: false, url: require('../assets/img/xx.png') }
+      { id: 1, val: '≤5', isLike: false },
+      { id: 2, val: '6', isLike: false },
+      { id: 3, val: '7', isLike: false },
+      { id: 4, val: '8', isLike: false },
+      { id: 5, val: '9', isLike: false }
     ])
     const startNum = ref(0)
     function tap (index) {
@@ -50,28 +50,24 @@ export default {
       if (startNum.value === 0) {
         startNum.value = idx
         for (let i = 0; i < idx; i++) {
-          btnArr[i].url = require('../assets/img/xx_ed.png')
           btnArr[i].isLike = true
         }
       } else {
         // 如果再次点击当前选中的星级-仅取消掉当前星级，保留之前的
         if (idx === startNum.value) {
           for (let i = index; i < total; i++) {
-            btnArr[i].url = require('../assets/img/xx.png')
             btnArr[i].isLike = false
           }
         }
         // 如果小于当前最高星级，则直接保留当前星级
         if (idx < startNum.value) {
           for (let i = idx; i < startNum.value; i++) {
-            btnArr[i].url = require('../assets/img/xx.png')
             btnArr[i].isLike = false
           }
         }
         // 如果大于当前星级，则直接选到该星级
         if (idx > startNum.value) {
           for (let i = 0; i < idx; i++) {
-            btnArr[i].url = require('../assets/img/xx_ed.png')
             btnArr[i].isLike = true
           }
         }
@@ -152,13 +148,19 @@ export default {
   background: rgba(0, 0, 0, .82);
   filter: blur(0px);
   .model_cont{
-    padding-top: 8px;
+    padding-top: 320px;
     min-height: 100vh;
     .top_cont{
       display: flex;
       justify-content: space-between;
       width: 100%;
-      margin-bottom: 228px;
+      position: fixed;
+      z-index: 10001;
+      background-color: #000;
+      left: 0;
+      top: 0;
+      right: 0;
+      padding: 8px 0 18px;
       .upload_btn{
         width: 206px;
         height: 72px;
