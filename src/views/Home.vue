@@ -236,11 +236,11 @@ export default {
           top: 0;
           left: 0;
           right: 0;
-          color: #3C485C;
+          color: transparent;
           font-size: 24px;
           font-weight: 600;
           margin: 0 auto;
-          line-height: 94px;
+          line-height: 104px;
           text-align: center;
         }
       }
@@ -263,7 +263,7 @@ export default {
           font-weight: 600;
           font-size: 24px;
           margin: 0 auto;
-          line-height: 94px;
+          line-height:104px;
           text-align: center;
         }
       }
