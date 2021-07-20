@@ -43,18 +43,26 @@ export default {
       { id: 5, val: '9', isLike: false }
     ])
     const startNum = ref(0)
-    const isDone = ref(false)
     function tap (index) {
       const total = btnArr.length
       const idx = index + 1
       // 判断
       if (startNum.value === 0) {
         startNum.value = idx
-        isDone.value = false
         for (let i = 0; i < idx; i++) {
           btnArr[i].isLike = true
         }
       } else {
+        for (let i = 0; i < total; i++) {
+          btnArr[i].isLike = false
+        }
+        setTimeout(() => {
+          for (let i = 0; i < idx; i++) {
+            btnArr[i].isLike = true
+          }
+        }, 1)
+        /**
+         * 另一种方式，可以点没了评价状态
         // 如果再次点击当前选中的星级-仅取消掉当前星级，保留之前的
         if (idx === startNum.value) {
           for (let i = index; i < total; i++) {
@@ -80,7 +88,7 @@ export default {
           }
         }
         startNum.value = count.value
-        isDone.value = true
+         */
       }
     }
     function showShare () {
@@ -94,7 +102,6 @@ export default {
       btnArr,
       startNum,
       isShare,
-      isDone,
       showShare,
       close,
       tap
