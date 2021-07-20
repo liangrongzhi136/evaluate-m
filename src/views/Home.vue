@@ -5,7 +5,7 @@
       <div class="model_cont">
         <div class="top_cont">
           <img src="../assets/img/logo.png" alt="logo" class="logo">
-          <div class="upload_btn">立即下载</div>
+          <div class="upload_btn" @click="download">立即下载</div>
         </div>
         <div class="head_box">
           <img src="../assets/img/p.jpg" class="head_img">
@@ -22,7 +22,7 @@
         <div class="to_request_btn" @click="showShare">去给Ta打分</div>
       </div>
     </div>
-    <div v-if="isShare" class="share_model_wrap" @click="close">
+    <div v-if="isShare" class="share_model_wrap" >
       <img src="../assets/img/share.png" class="share_img">
     </div>
   </div>
@@ -30,11 +30,12 @@
 
 <script>
 // @ is an alias to /src
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 export default {
   setup () {
     const isShow = ref(true)
     const isShare = ref(false)
+    const isWeixin = navigator.userAgent.indexOf('MicroMessenger') > -1
     const btnArr = reactive([
       { id: 1, val: '≤5', isLike: false },
       { id: 2, val: '6', isLike: false },
@@ -42,6 +43,14 @@ export default {
       { id: 4, val: '8', isLike: false },
       { id: 5, val: '9', isLike: false }
     ])
+    onMounted(() => {
+      // console.log('isWeixin!', isWeixin)
+      if (isWeixin) {
+        isShare.value = !isShare.value
+      } else {
+        location.href = 'signal://user.scorepage?user_id=19134'
+      }
+    })
     const startNum = ref(0)
     const nowSpan = ref(null)
     function tap (index) {
@@ -94,10 +103,14 @@ export default {
       }
     }
     function showShare () {
-      isShare.value = !isShare.value
+      // isShare.value = !isShare.value
+      location.href = 'signal://user.scorepage?user_id=19134'
     }
     function close () {
       isShare.value = !isShare.value
+    }
+    function download () {
+      location.href = 'https://itunes.apple.com/cn/app/id1523591723?mt=8'
     }
     return {
       isShow,
@@ -107,6 +120,7 @@ export default {
       nowSpan,
       showShare,
       close,
+      download,
       tap
     }
   }
