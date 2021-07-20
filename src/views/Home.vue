@@ -43,12 +43,14 @@ export default {
       { id: 5, val: '9', isLike: false }
     ])
     const startNum = ref(0)
+    const isDone = ref(false)
     function tap (index) {
       const total = btnArr.length
       const idx = index + 1
       // 判断
       if (startNum.value === 0) {
         startNum.value = idx
+        isDone.value = false
         for (let i = 0; i < idx; i++) {
           btnArr[i].isLike = true
         }
@@ -78,6 +80,7 @@ export default {
           }
         }
         startNum.value = count.value
+        isDone.value = true
       }
     }
     function showShare () {
@@ -91,6 +94,7 @@ export default {
       btnArr,
       startNum,
       isShare,
+      isDone,
       showShare,
       close,
       tap
@@ -229,7 +233,7 @@ export default {
           font-size: 24px;
           font-weight: 600;
           margin: 0 auto;
-          line-height: 96px;
+          line-height: 94px;
           text-align: center;
         }
       }
@@ -252,7 +256,7 @@ export default {
           font-weight: 600;
           font-size: 24px;
           margin: 0 auto;
-          line-height: 96px;
+          line-height: 94px;
           text-align: center;
         }
       }
