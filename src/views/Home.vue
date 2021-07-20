@@ -11,11 +11,11 @@
           <img src="../assets/img/p.jpg" class="head_img">
         </div>
         <div class="show_name">雷霆佳佳小姐和打爷爷的组合</div>
-        <div class="evaluate_box">
+        <div :class="`evaluate_box ${startNum>0?'evaluate_box_ed':''}`">
           <template v-for="(item, idx) in btnArr" :key="idx">
             <div :class="!item.isLike?'evaluate_btn':'evaluate_btn_ed'" @click="tap(idx)">
               <img :src="!item.isLike?require('../assets/img/xx.png'):require('../assets/img/xx_ed.png')" class="xx_img">
-              <span>{{item.val}}</span>
+              <span :class="`${nowSpan == idx?'nowspan':''}`">{{item.val}}</span>
             </div>
           </template>
         </div>
@@ -43,7 +43,9 @@ export default {
       { id: 5, val: '9', isLike: false }
     ])
     const startNum = ref(0)
+    const nowSpan = ref(null)
     function tap (index) {
+      nowSpan.value = index
       const total = btnArr.length
       const idx = index + 1
       // 判断
@@ -102,6 +104,7 @@ export default {
       btnArr,
       startNum,
       isShare,
+      nowSpan,
       showShare,
       close,
       tap
@@ -236,7 +239,7 @@ export default {
           top: 0;
           left: 0;
           right: 0;
-          color: transparent;
+          color: #FFFFFF;
           font-size: 24px;
           font-weight: 600;
           margin: 0 auto;
@@ -259,12 +262,22 @@ export default {
           top: 0;
           left: 0;
           right: 0;
-          color: #3C485C;
+          color: transparent;
           font-weight: 600;
           font-size: 24px;
           margin: 0 auto;
           line-height:104px;
           text-align: center;
+        }
+        span.nowspan{
+          color: #3C485C;
+        }
+      }
+    }
+    .evaluate_box_ed{
+      .evaluate_btn{
+        span{
+          color: transparent;
         }
       }
     }
