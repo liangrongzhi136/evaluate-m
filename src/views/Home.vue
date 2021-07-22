@@ -31,6 +31,7 @@
 <script>
 // @ is an alias to /src
 import { onMounted, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
   setup () {
     const isShow = ref(true)
@@ -43,12 +44,16 @@ export default {
       { id: 4, val: '8', isLike: false },
       { id: 5, val: '9', isLike: false }
     ])
+    // 解析url参数
+    const router = useRouter()
+    console.log(router.currentRoute.value.query)
+
     onMounted(() => {
       // console.log('isWeixin!', isWeixin)
       if (isWeixin) {
         isShare.value = !isShare.value
       } else {
-        location.href = 'signal://user.scorepage?user_id=19134'
+        location.href = `signal://user.scorepage?user_id=${router.currentRoute.value.query.userId}`
       }
     })
     const startNum = ref(0)
@@ -104,7 +109,7 @@ export default {
     }
     function showShare () {
       // isShare.value = !isShare.value
-      location.href = 'signal://user.scorepage?user_id=19134'
+      location.href = `signal://user.scorepage?user_id=${router.currentRoute.value.query.userId}`
     }
     function close () {
       isShare.value = !isShare.value
