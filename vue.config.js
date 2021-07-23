@@ -24,7 +24,7 @@ module.exports = {
       template: 'public/index.html',
       // output as dist/index.html
       filename: 'index.html',
-      title: '五星评价系统'
+      title: '第二信号'
     }
     // when using the entry-only string format,
     // template is inferred to be `public/subpage.html`
