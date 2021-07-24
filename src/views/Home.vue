@@ -19,7 +19,8 @@
             </div>
           </template>
         </div>
-        <div class="to_request_btn" @click="showShare">去给Ta打分</div>
+        <!-- <div class="to_request_btn" data-clipboard-text="复制内容" @click="showShare">去给Ta打分</div> -->
+        <div class="to_request_btn" data-clipboard-text="复制内容" @click="showShare">去给Ta打分</div>
       </div>
     </div>
     <div v-if="isShare" class="share_model_wrap" >
@@ -32,7 +33,11 @@
 // @ is an alias to /src
 import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
+// import Clipboard from 'clipboard'
 export default {
+  components: {
+    // Clipboard
+  },
   setup () {
     const avatar = ref('')
     const nickname = ref('')
@@ -116,6 +121,18 @@ export default {
       if (isWeixin) {
         isShare.value = !isShare.value
       } else {
+        // const clipboard = new Clipboard('.to_request_btn')
+        // clipboard.on('success', (e) => {
+        //     console.log('复制成功', e)
+        //     // 释放内存
+        //     clipboard.destroy()
+        // })
+        // clipboard.on('error', (e) => {
+        //     // 不支持复制
+        //     console.log('该浏览器不支持自动复制', e)
+        //     // 释放内存
+        //     clipboard.destroy()
+        // })
         location.href = `signal://user.scorepage?user_id=${router.currentRoute.value.query.userId}`
       }
     }
