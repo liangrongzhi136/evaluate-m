@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img src="../assets/img/p.jpg" class="index_img">
+    <img :src="avatar" class="index_img">
     <div v-if="isShow" class="model_wrap">
       <div class="model_cont">
         <div class="top_cont">
@@ -8,9 +8,9 @@
           <div class="upload_btn" @click="download">立即下载</div>
         </div>
         <div class="head_box">
-          <img src="../assets/img/p.jpg" class="head_img">
+          <img :src="avatar" class="head_img">
         </div>
-        <div class="show_name">雷霆佳佳小姐和打爷爷的组合</div>
+        <div class="show_name">{{nickname}}</div>
         <div :class="`evaluate_box ${startNum>0?'evaluate_box_ed':''}`">
           <template v-for="(item, idx) in btnArr" :key="idx">
             <div :class="!item.isLike?'evaluate_btn':'evaluate_btn_ed'" @click="tap(idx)">
@@ -34,6 +34,8 @@ import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 export default {
   setup () {
+    const avatar = ref('')
+    const nickname = ref('')
     const isShow = ref(true)
     const isShare = ref(false)
     const isWeixin = navigator.userAgent.indexOf('MicroMessenger') > -1
@@ -46,6 +48,8 @@ export default {
     ])
     // 解析url参数
     const router = useRouter()
+    avatar.value = router.currentRoute.value.query.avatar
+    nickname.value = router.currentRoute.value.query.nickname
     console.log(router.currentRoute.value.query)
 
     onMounted(() => {
@@ -113,6 +117,9 @@ export default {
         isShare.value = !isShare.value
       } else {
         location.href = `signal://user.scorepage?user_id=${router.currentRoute.value.query.userId}`
+        setTimeout(function () {
+          location.href = 'https://itunes.apple.com/cn/app/id1523591723?mt=8'
+        }, 1200)
       }
       // location.href = `signal://user.scorepage?user_id=${router.currentRoute.value.query.userId}`
     }
@@ -124,10 +131,14 @@ export default {
         isShare.value = !isShare.value
       } else {
         location.href = `signal://user.scorepage?user_id=${router.currentRoute.value.query.userId}`
+        setTimeout(function () {
+          location.href = 'https://itunes.apple.com/cn/app/id1523591723?mt=8'
+        }, 1200)
       }
-      // location.href = 'https://itunes.apple.com/cn/app/id1523591723?mt=8'
     }
     return {
+      avatar,
+      nickname,
       isShow,
       btnArr,
       startNum,
@@ -247,6 +258,7 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
       margin: 38px auto 196px;
+      text-align: center;
     }
     .evaluate_box{
       width: 590px;
