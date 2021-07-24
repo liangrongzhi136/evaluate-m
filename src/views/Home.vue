@@ -54,11 +54,11 @@ export default {
 
     onMounted(() => {
       // console.log('isWeixin!', isWeixin)
-      // if (isWeixin) {
-      //   isShare.value = !isShare.value
-      // } else {
-      //   location.href = `signal://user.scorepage?user_id=${router.currentRoute.value.query.userId}`
-      // }
+      if (isWeixin) {
+        isShare.value = !isShare.value
+      } else {
+        location.href = `signal://user.scorepage?user_id=${router.currentRoute.value.query.userId}`
+      }
     })
     const startNum = ref(0)
     const nowSpan = ref(null)
@@ -117,11 +117,7 @@ export default {
         isShare.value = !isShare.value
       } else {
         location.href = `signal://user.scorepage?user_id=${router.currentRoute.value.query.userId}`
-        setTimeout(function () {
-          location.href = 'https://itunes.apple.com/cn/app/id1523591723?mt=8'
-        }, 1200)
       }
-      // location.href = `signal://user.scorepage?user_id=${router.currentRoute.value.query.userId}`
     }
     function close () {
       isShare.value = !isShare.value
@@ -130,10 +126,7 @@ export default {
       if (isWeixin) {
         isShare.value = !isShare.value
       } else {
-        location.href = `signal://user.scorepage?user_id=${router.currentRoute.value.query.userId}`
-        setTimeout(function () {
-          location.href = 'https://itunes.apple.com/cn/app/id1523591723?mt=8'
-        }, 1200)
+        location.href = 'https://itunes.apple.com/cn/app/id1523591723?mt=8'
       }
     }
     return {
